@@ -1,4 +1,5 @@
 import Header from "./components/header/Header";
+import KanbanBoard from "./components/kanban-board/KanbanBoard";
 import GlobalStyle from "./styles/GlobalStyle";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <>
       <GlobalStyle />
       <Header />
+      <KanbanBoard/>
     </>
   );
 }
