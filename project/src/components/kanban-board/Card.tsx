@@ -2,10 +2,35 @@ import styled from "styled-components";
 import { bodyText, flex } from "../../styles/mixins";
 import Tag from "./Tag";
 import { CardType } from "../../types/ui/kanban-board.type";
+import { useDrag } from "react-dnd";
+import { useEffect } from "react";
+import { useCardDragStore } from "../../store";
 
 const Card = ({ TagText, TagTextColor, ContentText }: CardType) => {
+  // store
+  const { setIsDrag } = useCardDragStore();
+
+  // hooks
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "BOX",
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    end: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        setIsDrag(false); // 드래그 취소 시 강제 false 설정
+      }
+    },
+  }));
+
+  // useEffect
+  useEffect(() => {
+    setIsDrag(isDragging);
+    console.log(isDragging)
+  }, [isDragging, setIsDrag]);
+
   return (
-    <Container>
+    <Container ref={drag}>
       <Tag color={TagTextColor}>{TagText}</Tag>
       <Text>{ContentText}</Text>
     </Container>

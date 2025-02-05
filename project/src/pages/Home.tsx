@@ -15,6 +15,6 @@ const Home = () => {
 export default Home;
 
 const Container = styled.div`
-    ${flex("column")};
-    justify-content:flex-start;
-`
+  ${flex("column")};
+  justify-content: flex-start;
+`;
