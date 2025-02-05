@@ -1,13 +1,9 @@
 import styled from "styled-components";
 import { bodyText, flex } from "../../styles/mixins";
 import Tag from "./Tag";
-type PropsType = {
-  TagText: string;
-  TagTextColor?: string;
-  ContentText: string;
-};
+import { CardType } from "../../types/ui/kanban-board.type";
 
-const Card = ({ TagText, TagTextColor, ContentText }: PropsType) => {
+const Card = ({ TagText, TagTextColor, ContentText }: CardType) => {
   return (
     <Container>
       <Tag color={TagTextColor}>{TagText}</Tag>

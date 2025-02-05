@@ -29,4 +29,17 @@ export const bodyText = ({ type, fontWeight, lineHeight }: BodyTextParamsType) =
   line-height: ${lineHeight};
 `;
 
-// headText
+// CommonButton
+type MixinCommonButtonType = {
+  round: boolean;
+};
+export const mixinCommonButton = ({ round }: MixinCommonButtonType) => css`
+  ${flex("row")};
+  column-gap: 6px;
+  padding: 1px 6px;
+  border-radius: ${round ? "30px" : "6px"};
+  background-color: ${({ theme }) => theme.colors.buttonBackgroundColor};
+  color: ${({ theme }) => theme.colors.gray1};
+  font-size: 13px;
+  line-height: 120%;
+`;
