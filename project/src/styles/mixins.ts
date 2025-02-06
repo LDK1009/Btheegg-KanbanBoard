@@ -43,3 +43,18 @@ export const mixinCommonButton = ({ round }: MixinCommonButtonType) => css`
   font-size: 13px;
   line-height: 120%;
 `;
+
+// TextEllipsis
+type MixinTextEllipsisType = {
+  maxLine: number;
+};
+
+export const mixinTextEllipsis = ({ maxLine }: MixinTextEllipsisType) => css`
+display: -webkit-box;
+-webkit-line-clamp: ${maxLine}; // 특정 줄 이상이면 ellipsis(...) 적용
+-webkit-box-orient: vertical;
+overflow: hidden;
+text-overflow: ellipsis;
+word-wrap: break-word;
+overflow-wrap: break-word;
+`

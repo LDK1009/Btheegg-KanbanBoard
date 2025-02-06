@@ -1,11 +1,11 @@
-import { bodyText, flex, mixinCommonButton } from "../../styles/mixins";
+import { flex } from "../../styles/mixins";
 import Card from "./Card";
 import styled, { keyframes } from "styled-components";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { CardColumnType } from "../../types/ui/kanban-board.type";
 import AddCardButton from "./AddCardButton";
 import { useDrop } from "react-dnd";
 import { useCardDragStore } from "../../store";
+import CardColumnHeader from "./CardColumnHeader";
 
 const CardColumn = ({ columnName, cards }: CardColumnType) => {
   // store
@@ -26,8 +26,12 @@ const CardColumn = ({ columnName, cards }: CardColumnType) => {
 
   return (
     <Container ref={drop} $isOver={isOver} $isDrag={isDrag}>
-      <Header columnName={columnName} cards={cards} />
-      {cards.length === 0 && <AddCardButton />}
+      {/* 컬럼 헤더 */}
+      <CardColumnHeader columnName={columnName} cards={cards} />
+      {/* if(카드 개수 === 0) */}
+      {/* true : 카드 추가 컴포넌트 렌더링  */}
+      {cards.length === 0 && <AddCardButton/>}
+      {/* false : 카드 렌더링  */}
       {RenderCards}
     </Container>
   );
@@ -63,55 +67,3 @@ const Container = styled.div<ContainerType>`
   animation: ${(props) => (props.$isDrag ? pulse : "none")} 2s infinite ease-in-out;
   transition: background-color 0.3s ease;
 `;
-
-const NameBadgeWrap = styled.div`
-  ${flex("row")};
-  column-gap: 8px;
-`;
-
-const Name = styled.div`
-  ${bodyText({ type: 1, fontWeight: 800, lineHeight: "120%" })}
-`;
-
-////////// Header 컴포넌트
-const Header = ({ columnName, cards }: CardColumnType) => {
-  return (
-    <HeaderContainer>
-      <NameBadgeWrap>
-        <Name>{columnName}</Name>
-        <Bedge>{cards.length}</Bedge>
-      </NameBadgeWrap>
-      <AddButton>
-        <AddIcon />
-      </AddButton>
-    </HeaderContainer>
-  );
-};
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  ${flex("row")}
-  justify-content:space-between;
-`;
-
-const Bedge = styled.div`
-  width: 22px;
-  height: 22px;
-  ${flex()};
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 140%;
-  background-color: #e9e9e9;
-  color: ${({ theme }) => theme.colors.gray2};
-  border-radius: 30px;
-`;
-
-const AddIcon = styled(AddOutlinedIcon)`
-  width: 14px !important;
-  height: 14px !important;
-`;
-
-const AddButton = styled.div`
-  ${mixinCommonButton({ round: true })};
-`;
-////////// Header 컴포넌트 END

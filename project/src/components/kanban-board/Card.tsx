@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { bodyText, flex } from "../../styles/mixins";
+import { bodyText, flex, mixinTextEllipsis } from "../../styles/mixins";
 import Tag from "./Tag";
 import { CardType } from "../../types/ui/kanban-board.type";
 import { useDrag } from "react-dnd";
@@ -16,7 +16,7 @@ const Card = ({ TagText, TagTextColor, ContentText }: CardType) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (item, monitor) => {
+    end: (_item, monitor) => {
       if (!monitor.didDrop()) {
         setIsDrag(false); // 드래그 취소 시 강제 false 설정
       }
@@ -26,7 +26,7 @@ const Card = ({ TagText, TagTextColor, ContentText }: CardType) => {
   // useEffect
   useEffect(() => {
     setIsDrag(isDragging);
-    console.log(isDragging)
+    console.log(isDragging);
   }, [isDragging, setIsDrag]);
 
   return (
@@ -48,8 +48,11 @@ const Container = styled.div`
   padding: 20px 18px;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
+  background-color:#FFFFFF;
 `;
 
 const Text = styled.div`
+  width: 100%;
+  ${mixinTextEllipsis({ maxLine: 2 })}
   ${bodyText({ type: 1, fontWeight: 500, lineHeight: "120%" })}
 `;

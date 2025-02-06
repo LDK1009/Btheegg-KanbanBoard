@@ -2,6 +2,7 @@ import styled from "styled-components";
 import CardColumn from "./CardColumn";
 import { flex } from "../../styles/mixins";
 import AddListButton from "./AddListButton";
+import AddCardModal from "./AddCardModal";
 
 const KanbanBoard = () => {
   const cardColumns = [
@@ -42,7 +43,11 @@ const KanbanBoard = () => {
 
   return (
     <Container>
+      {/* 카드 추가 모달 */}
+      <AddCardModal />
+      {/* 프로젝트 이름 */}
       <ProjectName>Project No.1</ProjectName>
+      {/* 작업별 카드 컬럼 */}
       <CardColumnContainer>
         {RenderCardColumns}
         <AddListButton />

@@ -1,0 +1,235 @@
+import styled from "styled-components";
+import { useAddCardModalStore } from "../../store";
+import { Modal } from "@mui/material";
+import CommonInput from "../common/CommonInput";
+import { useState } from "react";
+import { bodyText, flex } from "../../styles/mixins";
+import Card from "./Card";
+
+const AddCardModal = () => {
+  ////////// Store
+  const { isOpen, close } = useAddCardModalStore();
+
+  ////////// State
+  const [formData, setFormData] = useState({
+    TagText: "",
+    TagTextColor: "",
+    ContentText: "",
+  });
+
+  ////////// Function
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const changeColor = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      TagTextColor: value,
+    }));
+  };
+
+  ////////// Data
+  const inputs = [
+    {
+      name: "TagText",
+      label: "태그명",
+      placeholder: "example",
+      type: "text",
+      value: formData.TagText,
+      onChange: handleChange,
+    },
+    {
+      name: "ContentText",
+      label: "설명",
+      placeholder: "example",
+      type: "text",
+      value: formData.ContentText,
+      onChange: handleChange,
+    },
+  ];
+
+  const colors = [
+    "#000000",
+    "#AAAAAA",
+    "#EEEEEE",
+    "#000000",
+    "#AAAAAA",
+    "#EEEEEE",
+    "#000000",
+    "#AAAAAA",
+    "#EEEEEE",
+    "#000000",
+  ];
+
+  ////////// Rendering
+  const RenderInputs = inputs.map((el, idx) => {
+    const { label, placeholder, type, value, onChange } = el;
+    return (
+      <CommonInput
+        key={idx}
+        name={el.name}
+        label={label}
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={onChange}
+      ></CommonInput>
+    );
+  });
+
+  const RenderColors = colors.map((el, idx) => (
+    <ColorSelecter key={idx} $backgroundColor={el} onClick={() => changeColor(el)} />
+  ));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("폼 전송");
+  };
+
+  ////////// Return
+  return (
+    <Modal open={isOpen} onClose={close}>
+      <FormContainer onSubmit={handleSubmit}>
+        {/* 프리뷰 + 입력란 */}
+        <InputPreviewWrap>
+          {/* 프리뷰 */}
+          <PreviewContainer>
+            <PreviewTitle>Preview</PreviewTitle>
+            <CardPreview>
+              <Card
+                TagText={formData.TagText}
+                TagTextColor={formData.TagTextColor}
+                ContentText={formData.ContentText}
+              />
+            </CardPreview>
+          </PreviewContainer>
+          {/* 입력란 */}
+          <InputContainer>
+            <InputTitle>Input</InputTitle>
+            <InputWrap1>
+              <InputWrap2>{RenderInputs}</InputWrap2>
+              <ColorSelecterContainer>{RenderColors}</ColorSelecterContainer>
+            </InputWrap1>
+          </InputContainer>
+        </InputPreviewWrap>
+        {/* 제출 버튼 */}
+        <SubmitButton type="submit">제출</SubmitButton>
+      </FormContainer>
+    </Modal>
+  );
+};
+
+export default AddCardModal;
+
+const FormContainer = styled.form`
+  width: 800px;
+  height: 600px;
+  padding: 24px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ${flex("column")};
+  justify-content: space-around;
+  background-color: white;
+  border-radius: 32px;
+  outline: none; // 포커스 시 보더 방지
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* 모달 그림자 추가 */
+`;
+
+const InputPreviewWrap = styled.div`
+  width: 100%;
+  ${flex("row")};
+  justify-content: space-around;
+`;
+
+////////// InputContainer 하위
+const InputContainer = styled.div``;
+
+const InputWrap1 = styled.div`
+  width: 300px;
+  height: 312px;
+  ${flex("column")};
+  justify-content: space-between;
+`;
+
+const InputWrap2 = styled.div`
+  width: 100%;
+  ${flex("column")};
+  row-gap: 16px;
+`;
+
+const ColorSelecterContainer = styled.div`
+  width: 100%;
+  ${flex("row")};
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+type ColorSelecterType = {
+  $backgroundColor: string;
+};
+
+const ColorSelecter = styled.div<ColorSelecterType>`
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
+  &:hover {
+    cursor: pointer;
+  }
+`;
+////////// END
+
+////////// PreviewContainer 하위
+const PreviewContainer = styled.div``;
+
+const CardPreview = styled.div`
+  ${flex("row")}
+  width:100%;
+  background-color: #f0f0f0;
+  padding: 100px 50px;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+`;
+
+const PreviewTitle = styled.div`
+  ${bodyText({ type: 5, lineHeight: "150%", fontWeight: 800 })};
+  color: ${({ theme }) => theme.colors.gray3};
+  text-align: center;
+  margin-bottom: 12px;
+`;
+
+const InputTitle = styled(PreviewTitle)``;
+////////// END
+
+const SubmitButton = styled.button`
+  ${bodyText({ type: 2, fontWeight: 800, lineHeight: "150%" })};
+  ${flex()};
+  width: 100%;
+  padding: 12px 0px;
+  background-color: white;
+  color: ${({ theme }) => theme.colors.gray4};
+  border: 1px solid gray;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray4};
+    transform: scale(1.05);
+    color: white;
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.gray4};
+    transform: scale(0.98);
+    color: white;
+  }
+`;

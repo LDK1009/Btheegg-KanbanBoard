@@ -24,4 +24,5 @@ const Container = styled.div<ContainerProps>`
   background-color: #f5f5f5;
   ${bodyText({ type: 1, fontWeight: 600, lineHeight: "150%" })}
   color:${(props) => props.$color || "#666666"};
+  transition: color 0.3s ease-in-out;
 `;

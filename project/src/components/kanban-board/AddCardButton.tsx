@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { flex, mixinCommonButton } from "../../styles/mixins";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useAddCardModalStore } from "../../store";
 
 const AddCardButton = () => {
+  const { open : addCardModalOpen } = useAddCardModalStore();
+
   return (
-    <Container>
+    <Container onClick={addCardModalOpen}>
       <Text> 지금 바로 추가해보세요.</Text>
       <AddButton>
         <AddIcon />
@@ -22,6 +25,11 @@ const Container = styled.div`
   row-gap: 13px;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
+  cursor: pointer;
+  transition : box-shadow 0.3s ease-in-out;
+  &:hover{
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
+  }
 `;
 
 const Text = styled.div`
