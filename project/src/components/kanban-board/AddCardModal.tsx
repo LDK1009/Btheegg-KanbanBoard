@@ -38,7 +38,7 @@ const AddCardModal = () => {
     {
       name: "TagText",
       label: "태그명",
-      placeholder: "example",
+      placeholder: "문서화",
       type: "text",
       value: formData.TagText,
       onChange: handleChange,
@@ -46,7 +46,7 @@ const AddCardModal = () => {
     {
       name: "ContentText",
       label: "설명",
-      placeholder: "example",
+      placeholder: "디자인시스템 2.1버전 로그를 작성합니다.",
       type: "text",
       value: formData.ContentText,
       onChange: handleChange,
@@ -54,16 +54,16 @@ const AddCardModal = () => {
   ];
 
   const colors = [
-    "#000000",
-    "#AAAAAA",
-    "#EEEEEE",
-    "#000000",
-    "#AAAAAA",
-    "#EEEEEE",
-    "#000000",
-    "#AAAAAA",
-    "#EEEEEE",
-    "#000000",
+    "#111827",
+    "#1F2937",
+    "#374151",
+    "#4B5563",
+    "#6B7280",
+    "#DC2626",
+    "#D97706",
+    "#059669",
+    "#2563EB",
+    "#7C3AED",
   ];
 
   ////////// Rendering
@@ -118,7 +118,7 @@ const AddCardModal = () => {
           </InputContainer>
         </InputPreviewWrap>
         {/* 제출 버튼 */}
-        <SubmitButton type="submit">제출</SubmitButton>
+        <SubmitButton type="submit">생성</SubmitButton>
       </FormContainer>
     </Modal>
   );
@@ -212,24 +212,25 @@ const InputTitle = styled(PreviewTitle)``;
 const SubmitButton = styled.button`
   ${bodyText({ type: 2, fontWeight: 800, lineHeight: "150%" })};
   ${flex()};
-  width: 100%;
+  width: 90%;
   padding: 12px 0px;
-  background-color: white;
-  color: ${({ theme }) => theme.colors.gray4};
-  border: 1px solid gray;
+  border: 0px;
   border-radius: 8px;
-  cursor: pointer;
+  background-color: rgba(0, 0, 255, 0.2);
+  color: white;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray4};
-    transform: scale(1.05);
-    color: white;
+    background-color: white;
+    color: rgba(0, 0, 255, 0.2);
+    transform: scale(1.01);
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.gray4};
+    background-color: white;
+    color: rgba(0, 0, 255, 0.2);
     transform: scale(0.98);
-    color: white;
   }
 `;
