@@ -1,16 +1,19 @@
-import styled from "styled-components";
-import { useAddCardModalStore } from "../../store";
+import styled, { keyframes } from "styled-components";
+import { useAddCardModalStore, useKanbanBoardStore } from "../../store";
 import { Modal } from "@mui/material";
 import CommonInput from "../common/CommonInput";
 import { useState } from "react";
 import { bodyText, flex } from "../../styles/mixins";
 import Card from "./Card";
+import CommonSelect from "../common/CommonSelect";
 
 const AddCardModal = () => {
   ////////// Store
   const { isOpen, close } = useAddCardModalStore();
+  const { cardColumns, addCard } = useKanbanBoardStore();
 
   ////////// State
+  const [column, setColumn] = useState<string | number>("");
   const [formData, setFormData] = useState({
     TagText: "",
     TagTextColor: "",
@@ -33,6 +36,14 @@ const AddCardModal = () => {
     }));
   };
 
+  const clearFormData = () => {
+    setFormData({
+      TagText: "",
+      TagTextColor: "",
+      ContentText: "",
+    });
+  };
+
   ////////// Data
   const inputs = [
     {
@@ -53,42 +64,45 @@ const AddCardModal = () => {
     },
   ];
 
-  const colors = [
-    "#111827",
-    "#1F2937",
-    "#374151",
-    "#4B5563",
-    "#6B7280",
-    "#DC2626",
-    "#D97706",
-    "#059669",
-    "#2563EB",
-    "#7C3AED",
-  ];
+  const colors = ["#111827", "#DC2626", "#D97706", "#2563EB", "#7C3AED"];
+
+  const selectMenus = cardColumns.map((el) => el.columnName);
+
+  const selectProps = {
+    label: "컬럼",
+    selectValue: column,
+    menus: selectMenus,
+    menuClick: setColumn,
+  };
 
   ////////// Rendering
   const RenderInputs = inputs.map((el, idx) => {
     const { label, placeholder, type, value, onChange } = el;
     return (
-      <CommonInput
-        key={idx}
-        name={el.name}
-        label={label}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-        onChange={onChange}
-      ></CommonInput>
+      <>
+        <CommonInput
+          key={idx}
+          name={el.name}
+          label={label}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          onChange={onChange}
+          required={true}
+        />
+      </>
     );
   });
 
   const RenderColors = colors.map((el, idx) => (
-    <ColorSelecter key={idx} $backgroundColor={el} onClick={() => changeColor(el)} />
+    <ColorSelecter key={idx} $backgroundColor={el} $delay={(idx + 1) * 0.3} onClick={() => changeColor(el)} />
   ));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("폼 전송");
+    close();
+    addCard(column as string, formData);
+    clearFormData();
   };
 
   ////////// Return
@@ -112,7 +126,10 @@ const AddCardModal = () => {
           <InputContainer>
             <InputTitle>Input</InputTitle>
             <InputWrap1>
-              <InputWrap2>{RenderInputs}</InputWrap2>
+              <InputWrap2>
+                <CommonSelect {...selectProps} />
+                {RenderInputs}
+              </InputWrap2>
               <ColorSelecterContainer>{RenderColors}</ColorSelecterContainer>
             </InputWrap1>
           </InputContainer>
@@ -173,14 +190,27 @@ const ColorSelecterContainer = styled.div`
 `;
 
 type ColorSelecterType = {
+  $delay: number;
   $backgroundColor: string;
 };
+
+const slideDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const ColorSelecter = styled.div<ColorSelecterType>`
   width: 50px;
   height: 50px;
   border-radius: 16px;
   background-color: ${({ $backgroundColor }) => $backgroundColor};
+  animation: ${slideDown} ${({ $delay }) => `${$delay}s`} ease forwards;
   &:hover {
     cursor: pointer;
   }

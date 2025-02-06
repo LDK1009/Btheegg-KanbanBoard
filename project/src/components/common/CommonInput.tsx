@@ -8,9 +8,10 @@ type PropsType = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
+  required?: boolean;
 };
 
-const CommonInput = ({ name, label, placeholder, type = "text", value, onChange, disabled = false }: PropsType) => {
+const CommonInput = ({ name, label, placeholder, type = "text", value, onChange, disabled = false, required = false }: PropsType) => {
   return (
     <InputWrapper>
       {label && <Label htmlFor={name}>{label}</Label>}
@@ -22,6 +23,7 @@ const CommonInput = ({ name, label, placeholder, type = "text", value, onChange,
         value={value}
         onChange={onChange}
         disabled={disabled}
+        required = {required}
       />
     </InputWrapper>
   );
