@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type PropsType = {
-  name: string;
+  name?: string;
   label?: string;
   placeholder?: string;
   type?: string;

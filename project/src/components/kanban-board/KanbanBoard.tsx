@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import CardColumn from "./CardColumn";
 import { flex } from "../../styles/mixins";
-import AddColumnButton from "./AddColumnButton";
 import AddCardModal from "./AddCardModal";
 import { useKanbanBoardStore } from "../../store";
+import AddColumnButton from "./AddColumnButton";
 
 const KanbanBoard = () => {
   const { columns } = useKanbanBoardStore();
