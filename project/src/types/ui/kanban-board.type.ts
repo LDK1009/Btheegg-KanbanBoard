@@ -1,12 +1,9 @@
 export type CardType = {
+  columnName:string;
   TagText: string;
   TagTextColor?: string;
   ContentText: string;
 };
 
-export type CardColumnType = {
-  columnName: string;
-  cards: CardType[] | null;
-};
+export type ColumnType = string;
 
-export type CardColumnsType = CardColumnType[];

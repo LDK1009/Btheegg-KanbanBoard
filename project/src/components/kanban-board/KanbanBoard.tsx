@@ -6,10 +6,10 @@ import AddCardModal from "./AddCardModal";
 import { useKanbanBoardStore } from "../../store";
 
 const KanbanBoard = () => {
-  const {cardColumns} = useKanbanBoardStore();
+  const {columns} = useKanbanBoardStore();
 
-  const RenderCardColumns = cardColumns.map((el, idx) => {
-    return <CardColumn key={idx} columnName={el.columnName} cards={el.cards} />;
+  const RenderCardColumns = columns.map((el, idx) => {
+    return <CardColumn key={idx} columnName={el} />;
   });
 
   return (

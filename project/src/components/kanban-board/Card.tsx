@@ -6,13 +6,14 @@ import { useDrag } from "react-dnd";
 import { useEffect } from "react";
 import { useCardDragStore } from "../../store";
 
-const Card = ({ TagText, TagTextColor, ContentText }: CardType) => {
+const Card = ({ columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
   const { setIsDrag } = useCardDragStore();
 
   // hooks
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "BOX",
+    item: { columnName, TagText, TagTextColor, ContentText },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

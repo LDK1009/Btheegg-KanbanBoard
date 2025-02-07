@@ -1,27 +1,45 @@
 import { flex } from "../../styles/mixins";
 import Card from "./Card";
 import styled, { keyframes } from "styled-components";
-import { CardColumnType } from "../../types/ui/kanban-board.type";
 import AddCardButton from "./AddCardButton";
 import { useDrop } from "react-dnd";
-import { useCardDragStore } from "../../store";
+import { useCardDragStore, useKanbanBoardStore } from "../../store";
 import CardColumnHeader from "./CardColumnHeader";
 
-const CardColumn = ({ columnName, cards }: CardColumnType) => {
+type PropsType = {
+  columnName: string;
+};
+
+const CardColumn = ({ columnName }: PropsType) => {
   // store
   const { isDrag } = useCardDragStore();
+  const { cards } = useKanbanBoardStore();
 
   // DnD hooks
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
-    drop: () => alert("✅ 박스가 드롭되었습니다!"),
+    drop: () => {},
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
 
-  const RenderCards = cards.map((el, idx) => {
-    return <Card key={idx} TagText={el.TagText} TagTextColor={el.TagTextColor} ContentText={el.ContentText} />;
+  // Data
+  const filteredCards = cards?.filter((el) => {
+    return columnName === el.columnName;
+  });
+
+  // Component
+  const RenderCards = filteredCards?.map((el, idx) => {
+    return (
+      <Card
+        key={idx}
+        columnName={el.columnName}
+        TagText={el.TagText}
+        TagTextColor={el.TagTextColor}
+        ContentText={el.ContentText}
+      />
+    );
   });
 
   return (
@@ -30,7 +48,7 @@ const CardColumn = ({ columnName, cards }: CardColumnType) => {
       <CardColumnHeader columnName={columnName} cards={cards} />
       {/* if(카드 개수 === 0) */}
       {/* true : 카드 추가 컴포넌트 렌더링  */}
-      {cards.length === 0 && <AddCardButton/>}
+      {cards?.length === 0 && <AddCardButton />}
       {/* false : 카드 렌더링  */}
       {RenderCards}
     </Container>

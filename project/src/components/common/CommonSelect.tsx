@@ -7,10 +7,10 @@ type PropsType = {
   label?: string;
   selectValue: MenuType;
   menus: MenuType[];
-  menuClick: Dispatch<SetStateAction<MenuType>>;
+  menuClick: Dispatch<SetStateAction<string>>;
 };
 
-type MenuType = number | string;
+type MenuType = string;
 
 const CommonSelect = ({ label, selectValue, menus, menuClick }: PropsType) => {
   return (
