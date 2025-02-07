@@ -19,7 +19,7 @@ const CardColumn = ({ columnName }: PropsType) => {
   // DnD hooks
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
-    drop: (card : CardType) => {
+    drop: (card: CardType) => {
       deleteCard(card.id);
       addCard({
         ...card,
@@ -37,10 +37,10 @@ const CardColumn = ({ columnName }: PropsType) => {
   });
 
   // Component
-  const RenderCards = filteredCards?.map((el, idx) => {
+  const RenderCards = filteredCards?.map((el) => {
     return (
       <Card
-        key={idx}
+        key={el.id}
         id={el.id}
         columnName={el.columnName}
         TagText={el.TagText}

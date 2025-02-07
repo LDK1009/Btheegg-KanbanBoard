@@ -50,6 +50,7 @@ const Container = styled.div`
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
   background-color: #ffffff;
+  cursor: grab;
 `;
 
 const Text = styled.div`

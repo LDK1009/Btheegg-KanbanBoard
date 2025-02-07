@@ -5,11 +5,10 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 function App() {
   return (
     <>
-        <DndProvider backend={HTML5Backend}>
-
-      <GlobalStyle />
-      <Home />
-        </DndProvider>
+      <DndProvider backend={HTML5Backend}>
+        <GlobalStyle />
+        <Home />
+      </DndProvider>
     </>
   );
 }
