@@ -1,10 +1,16 @@
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { bodyText, flex, mixinCommonButton } from "../../styles/mixins";
-import { CardColumnType } from "../../types/ui/kanban-board.type";
+import { CardType, ColumnType } from "../../types/ui/kanban-board.type";
 import styled from "styled-components";
 import { useAddCardModalStore } from "../../store";
 
-const CardColumnHeader = ({ columnName, cards }: CardColumnType) => {
+type PropsType = {
+  columnName:ColumnType;
+  cards:CardType[];
+}
+
+
+const CardColumnHeader = ({ columnName, cards }: PropsType) => {
   const { open } = useAddCardModalStore();
 
   return (
