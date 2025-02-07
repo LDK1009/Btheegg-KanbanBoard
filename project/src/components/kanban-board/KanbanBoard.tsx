@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import CardColumn from "./CardColumn";
 import { flex } from "../../styles/mixins";
-import AddListButton from "./AddListButton";
+import AddColumnButton from "./AddColumnButton";
 import AddCardModal from "./AddCardModal";
 import { useKanbanBoardStore } from "../../store";
 
 const KanbanBoard = () => {
-  const {columns} = useKanbanBoardStore();
+  const { columns } = useKanbanBoardStore();
 
   const RenderCardColumns = columns.map((el, idx) => {
     return <CardColumn key={idx} columnName={el} />;
@@ -21,7 +21,7 @@ const KanbanBoard = () => {
       {/* 작업별 카드 컬럼 */}
       <CardColumnContainer>
         {RenderCardColumns}
-        <AddListButton />
+        <AddColumnButton />
       </CardColumnContainer>
     </Container>
   );
@@ -45,8 +45,11 @@ const ProjectName = styled.div`
 `;
 
 const CardColumnContainer = styled.div`
+  width: 100%;
   ${flex("row")};
   justify-content: start;
   align-items: start;
+  row-gap: 48px;
+  flex-wrap: wrap-reverse;
   column-gap: 20px;
 `;

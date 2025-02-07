@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { mixinCommonButton } from "../../styles/mixins";
+import { useKanbanBoardStore } from "../../store";
 
-const AddListButton = () => {
+const AddColumnButton = () => {
+  const {addColumn} = useKanbanBoardStore();
   return (
-    <Container>
+    <Container onClick={()=>addColumn("새 컬럼")}>
       <AddIcon />
       <div>Add another list</div>
     </Container>
   );
 };
 
-export default AddListButton;
+export default AddColumnButton;
 
 const Container = styled.div`
   ${mixinCommonButton({ round: false })};

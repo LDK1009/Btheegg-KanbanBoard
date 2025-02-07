@@ -4,9 +4,10 @@ import { CardType, ColumnType } from "../types/ui/kanban-board.type";
 // Zustand 스토어 생성
 type KanbanBoardStoreType = {
   cards: CardType[];
-  columns: ColumnType[];
   addCard: (cardInfo: CardType) => void;
   deleteCard: (id: number) => void;
+  columns: ColumnType[];
+  addColumn: (columnName: string) => void;
 };
 
 export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
@@ -33,7 +34,6 @@ export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
       ContentText: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
   ],
-  columns:["시작 전", "진행 중", "완료"],
   // 카드 생성
   addCard: (cardInfo) =>
     set((state) => ({
@@ -44,4 +44,9 @@ export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
     set((state) => ({
       cards: state.cards.filter((card) => card.id !== id),
     })),
-  }));
+  columns: ["시작 전", "진행 중", "완료"],
+  // 컬럼 생성
+  addColumn: (columnName) => set((state) => ({
+    columns : [...state.columns, columnName]
+  })),
+}));
