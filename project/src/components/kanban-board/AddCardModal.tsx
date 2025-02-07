@@ -74,6 +74,8 @@ const AddCardModal = () => {
     menuClick: setColumn,
   };
 
+  const nextCardId = cards[cards.length - 1].id + 1;
+
   ////////// Rendering
   const RenderInputs = inputs.map((el, idx) => {
     const { label, placeholder, type, value, onChange } = el;
@@ -100,7 +102,7 @@ const AddCardModal = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     close();
-    addCard({id: cards.length,columnName : column, ...formData});
+    addCard({id: nextCardId, columnName : column, ...formData});
     clearFormData();
   };
 
@@ -115,7 +117,7 @@ const AddCardModal = () => {
             <PreviewTitle>Preview</PreviewTitle>
             <CardPreview>
               <Card
-                id={cards.length}
+                id={nextCardId}
                 columnName={column}
                 TagText={formData.TagText}
                 TagTextColor={formData.TagTextColor}

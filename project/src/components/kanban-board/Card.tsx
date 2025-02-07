@@ -4,17 +4,16 @@ import Tag from "./Tag";
 import { CardType } from "../../types/ui/kanban-board.type";
 import { useDrag } from "react-dnd";
 import { useEffect } from "react";
-import { useCardDragStore, useKanbanBoardStore } from "../../store";
+import { useCardDragStore } from "../../store";
 
 const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
   const { setIsDrag } = useCardDragStore();
-  const {deleteCard} = useKanbanBoardStore();
 
   // hooks
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "BOX",
-    item: { columnName, TagText, TagTextColor, ContentText },
+    item: { id, columnName, TagText, TagTextColor, ContentText },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -33,10 +32,8 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
 
   return (
     <Container ref={drag}>
-      <div>{id}</div>
       <Tag color={TagTextColor}>{TagText}</Tag>
       <Text>{ContentText}</Text>
-      <button onClick={()=>deleteCard(id)}>삭제</button>
     </Container>
   );
 };
@@ -52,7 +49,7 @@ const Container = styled.div`
   padding: 20px 18px;
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
-  background-color:#FFFFFF;
+  background-color: #ffffff;
 `;
 
 const Text = styled.div`

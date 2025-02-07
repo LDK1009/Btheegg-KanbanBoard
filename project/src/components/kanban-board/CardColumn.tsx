@@ -14,12 +14,13 @@ type PropsType = {
 const CardColumn = ({ columnName }: PropsType) => {
   // store
   const { isDrag } = useCardDragStore();
-  const { cards, addCard } = useKanbanBoardStore();
+  const { cards, addCard, deleteCard } = useKanbanBoardStore();
 
   // DnD hooks
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
     drop: (card : CardType) => {
+      deleteCard(card.id);
       addCard({
         ...card,
         columnName,
