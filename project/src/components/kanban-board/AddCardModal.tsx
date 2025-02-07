@@ -10,7 +10,7 @@ import CommonSelect from "../common/CommonSelect";
 const AddCardModal = () => {
   ////////// Store
   const { isOpen, close } = useAddCardModalStore();
-  const { columns, addCard } = useKanbanBoardStore();
+  const { cards, columns, addCard } = useKanbanBoardStore();
 
   ////////// State
   const [column, setColumn] = useState(columns[0]);
@@ -100,7 +100,7 @@ const AddCardModal = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     close();
-    addCard({columnName : column, ...formData});
+    addCard({id: cards.length,columnName : column, ...formData});
     clearFormData();
   };
 
@@ -115,6 +115,7 @@ const AddCardModal = () => {
             <PreviewTitle>Preview</PreviewTitle>
             <CardPreview>
               <Card
+                id={cards.length}
                 columnName={column}
                 TagText={formData.TagText}
                 TagTextColor={formData.TagTextColor}

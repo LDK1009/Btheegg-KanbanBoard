@@ -4,11 +4,12 @@ import Tag from "./Tag";
 import { CardType } from "../../types/ui/kanban-board.type";
 import { useDrag } from "react-dnd";
 import { useEffect } from "react";
-import { useCardDragStore } from "../../store";
+import { useCardDragStore, useKanbanBoardStore } from "../../store";
 
-const Card = ({ columnName, TagText, TagTextColor, ContentText }: CardType) => {
+const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
   const { setIsDrag } = useCardDragStore();
+  const {deleteCard} = useKanbanBoardStore();
 
   // hooks
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -32,8 +33,10 @@ const Card = ({ columnName, TagText, TagTextColor, ContentText }: CardType) => {
 
   return (
     <Container ref={drag}>
+      <div>{id}</div>
       <Tag color={TagTextColor}>{TagText}</Tag>
       <Text>{ContentText}</Text>
+      <button onClick={()=>deleteCard(id)}>삭제</button>
     </Container>
   );
 };

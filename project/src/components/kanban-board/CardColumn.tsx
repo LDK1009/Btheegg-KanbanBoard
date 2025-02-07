@@ -5,6 +5,7 @@ import AddCardButton from "./AddCardButton";
 import { useDrop } from "react-dnd";
 import { useCardDragStore, useKanbanBoardStore } from "../../store";
 import CardColumnHeader from "./CardColumnHeader";
+import { CardType } from "../../types/ui/kanban-board.type";
 
 type PropsType = {
   columnName: string;
@@ -13,12 +14,17 @@ type PropsType = {
 const CardColumn = ({ columnName }: PropsType) => {
   // store
   const { isDrag } = useCardDragStore();
-  const { cards } = useKanbanBoardStore();
+  const { cards, addCard } = useKanbanBoardStore();
 
   // DnD hooks
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
-    drop: () => {},
+    drop: (card : CardType) => {
+      addCard({
+        ...card,
+        columnName,
+      });
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
@@ -34,6 +40,7 @@ const CardColumn = ({ columnName }: PropsType) => {
     return (
       <Card
         key={idx}
+        id={el.id}
         columnName={el.columnName}
         TagText={el.TagText}
         TagTextColor={el.TagTextColor}
@@ -45,10 +52,10 @@ const CardColumn = ({ columnName }: PropsType) => {
   return (
     <Container ref={drop} $isOver={isOver} $isDrag={isDrag}>
       {/* 컬럼 헤더 */}
-      <CardColumnHeader columnName={columnName} cards={cards} />
+      <CardColumnHeader columnName={columnName} cards={filteredCards} />
       {/* if(카드 개수 === 0) */}
       {/* true : 카드 추가 컴포넌트 렌더링  */}
-      {cards?.length === 0 && <AddCardButton />}
+      {filteredCards?.length === 0 && <AddCardButton />}
       {/* false : 카드 렌더링  */}
       {RenderCards}
     </Container>
