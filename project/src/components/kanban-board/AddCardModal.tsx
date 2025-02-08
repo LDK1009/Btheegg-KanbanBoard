@@ -66,7 +66,6 @@ const AddCardModal = () => {
 
   const colors = ["#111827", "#DC2626", "#D97706", "#2563EB", "#7C3AED"];
 
-
   const selectProps = {
     label: "컬럼",
     selectValue: column,
@@ -74,7 +73,7 @@ const AddCardModal = () => {
     menuClick: setColumn,
   };
 
-  const nextCardId = cards[cards.length - 1]?.id + 1 | 1;
+  const nextCardId = (cards[cards.length - 1]?.id + 1) | 1;
 
   ////////// Rendering
   const RenderInputs = inputs.map((el, idx) => {
@@ -102,7 +101,7 @@ const AddCardModal = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     close();
-    addCard({id: nextCardId, columnName : column, ...formData});
+    addCard({ id: nextCardId, columnName: column, ...formData });
     clearFormData();
   };
 

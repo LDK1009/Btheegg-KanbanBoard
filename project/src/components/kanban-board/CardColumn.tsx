@@ -37,7 +37,7 @@ const CardColumn = ({ columnName }: PropsType) => {
   });
 
   // Component
-  const RenderCards = filteredCards?.map((el) => {
+  const RenderCards = filteredCards?.map((el, idx) => {
     return (
       <Card
         key={el.id}
@@ -46,6 +46,7 @@ const CardColumn = ({ columnName }: PropsType) => {
         TagText={el.TagText}
         TagTextColor={el.TagTextColor}
         ContentText={el.ContentText}
+        delay={idx * 0.15}
       />
     );
   });

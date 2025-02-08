@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useCardDragStore, useKanbanBoardStore } from "../../store";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
+const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
   const { setIsDrag } = useCardDragStore();
   const { deleteCard } = useKanbanBoardStore();
@@ -45,7 +45,7 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
   }, []);
 
   return (
-    <Container ref={drag}>
+    <Container ref={drag} $delay={delay}>
       <Header>
         {/* 태그 */}
         <Tag color={TagTextColor}>{TagText}</Tag>
@@ -70,7 +70,18 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
 
 export default Card;
 
-const Container = styled.div`
+const slideUp = keyframes`
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const Container = styled.div<{ $delay: number }>`
   width: 201px;
   height: 112px;
   ${flex("column")};
@@ -81,8 +92,11 @@ const Container = styled.div`
   border-radius: 10px;
   background-color: #ffffff;
   cursor: grab;
-  transition : box-shadow 0.3s ease-in-out;
-  &:hover{
+  transition: box-shadow 0.3s ease-in-out;
+  animation: ${slideUp} 0.3s ease-in-out both;
+  animation-delay: ${({ $delay }) => `${$delay}s`};
+
+  &:hover {
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
   }
 `;
