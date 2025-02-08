@@ -4,10 +4,30 @@ import { flex } from "../../styles/mixins";
 import AddCardModal from "./AddCardModal";
 import { useKanbanBoardStore } from "../../store";
 import AddColumnButton from "./AddColumnButton";
+import { useState } from "react";
 
 const KanbanBoard = () => {
+  // Store
   const { columns } = useKanbanBoardStore();
 
+  // State
+  const [projectName, setProjectName] = useState("Project No.1");
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Fuction
+  const toggleEditing = () => {
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProjectName(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") setIsEditing(false);
+  };
+
+  // Rendering
   const RenderCardColumns = columns.map((el, idx) => {
     return <CardColumn key={idx} columnName={el} />;
   });
@@ -17,7 +37,19 @@ const KanbanBoard = () => {
       {/* 카드 추가 모달 */}
       <AddCardModal />
       {/* 프로젝트 이름 */}
-      <ProjectName>Project No.1</ProjectName>
+      {isEditing ? (
+        <ProjectNameInput
+          type="text"
+          value={projectName}
+          onChange={handleNameChange}
+          onBlur={toggleEditing}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
+      ) : (
+        <ProjectName onClick={toggleEditing}>{projectName}</ProjectName>
+      )}
+
       {/* 작업별 카드 컬럼 */}
       <CardColumnContainer>
         {RenderCardColumns}
@@ -42,6 +74,16 @@ const ProjectName = styled.div`
   line-height: 142%;
   letter-spacing: -2%;
   color: #3a3a3a;
+`;
+
+const ProjectNameInput = styled.input`
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 142%;
+  letter-spacing: -2%;
+  border: none;
+  outline: none;
+  background: transparent;
 `;
 
 const CardColumnContainer = styled.div`
