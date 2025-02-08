@@ -81,6 +81,10 @@ const Container = styled.div`
   border-radius: 10px;
   background-color: #ffffff;
   cursor: grab;
+  transition : box-shadow 0.3s ease-in-out;
+  &:hover{
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
+  }
 `;
 
 const Header = styled.div`
