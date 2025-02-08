@@ -57,7 +57,7 @@ const CardColumn = ({ columnName }: PropsType) => {
       <CardColumnHeader columnName={columnName} cards={filteredCards} />
       {/* if(카드 개수 === 0) */}
       {/* true : 카드 추가 컴포넌트 렌더링  */}
-      {filteredCards?.length === 0 && <AddCardButton />}
+      {filteredCards?.length === 0 && <AddCardButton columnName={columnName} />}
       {/* false : 카드 렌더링  */}
       {RenderCards}
     </Container>

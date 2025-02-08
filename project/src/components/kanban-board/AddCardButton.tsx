@@ -3,11 +3,20 @@ import { flex, mixinCommonButton } from "../../styles/mixins";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useAddCardModalStore } from "../../store";
 
-const AddCardButton = () => {
-  const { open : addCardModalOpen } = useAddCardModalStore();
+type PropsType = {
+  columnName: string;
+};
+
+const AddCardButton = ({ columnName }: PropsType) => {
+  const { open: addCardModalOpen, setSelectedColumn } = useAddCardModalStore();
 
   return (
-    <Container onClick={addCardModalOpen}>
+    <Container
+      onClick={() => {
+        addCardModalOpen();
+        setSelectedColumn(columnName);
+      }}
+    >
       <Text> 지금 바로 추가해보세요.</Text>
       <AddButton>
         <AddIcon />
@@ -26,8 +35,8 @@ const Container = styled.div`
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.06);
   border-radius: 10px;
   cursor: pointer;
-  transition : box-shadow 0.3s ease-in-out;
-  &:hover{
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
   }
 `;

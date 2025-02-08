@@ -9,11 +9,10 @@ import CommonSelect from "../common/CommonSelect";
 
 const AddCardModal = () => {
   ////////// Store
-  const { isOpen, close } = useAddCardModalStore();
+  const { isOpen, close, selectedColumn, setSelectedColumn } = useAddCardModalStore();
   const { cards, columns, addCard } = useKanbanBoardStore();
 
   ////////// State
-  const [column, setColumn] = useState(columns[0]);
   const [formData, setFormData] = useState({
     TagText: "",
     TagTextColor: "",
@@ -68,9 +67,9 @@ const AddCardModal = () => {
 
   const selectProps = {
     label: "컬럼",
-    selectValue: column,
+    selectValue: selectedColumn,
     menus: columns,
-    menuClick: setColumn,
+    menuClick: setSelectedColumn,
   };
 
   const nextCardId = (cards[cards.length - 1]?.id + 1) | 1;
@@ -101,7 +100,7 @@ const AddCardModal = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     close();
-    addCard({ id: nextCardId, columnName: column, ...formData });
+    addCard({ id: nextCardId, columnName: selectedColumn, ...formData });
     clearFormData();
   };
 
@@ -117,7 +116,7 @@ const AddCardModal = () => {
             <CardPreview>
               <Card
                 id={nextCardId}
-                columnName={column}
+                columnName={selectedColumn}
                 TagText={formData.TagText}
                 TagTextColor={formData.TagTextColor}
                 ContentText={formData.ContentText}

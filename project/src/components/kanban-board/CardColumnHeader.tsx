@@ -12,7 +12,7 @@ type PropsType = {
 
 const CardColumnHeader = ({ columnName, cards }: PropsType) => {
   // store
-  const { open } = useAddCardModalStore();
+  const { open, setSelectedColumn } = useAddCardModalStore();
   const { deleteColumn } = useKanbanBoardStore();
 
   // hooks
@@ -35,7 +35,12 @@ const CardColumnHeader = ({ columnName, cards }: PropsType) => {
         <Name>{columnName}</Name>
         <Bedge>{cards.length}</Bedge>
       </NameBadgeWrap>
-      <AddButton onClick={open}>
+      <AddButton
+        onClick={() => {
+          open();
+          setSelectedColumn(columnName);
+        }}
+      >
         <AddIcon />
       </AddButton>
     </HeaderContainer>

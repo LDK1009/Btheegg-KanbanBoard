@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# 📌 프로젝트 제목
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Kanban Board (React 기반 칸반 보드 애플리케이션)
 
-Currently, two official plugins are available:
+## 📋 프로젝트 개요
+이 프로젝트는 React를 사용하여 구현한 칸반 보드 애플리케이션입니다. 사용자는 프로젝트 제목을 수정하고, 컬럼과 카드를 추가, 삭제, 수정할 수 있으며, 드래그 앤 드롭을 활용하여 카드의 위치를 변경할 수 있습니다. 또한, 로컬 스토리지를 활용하여 보드 상태를 저장할 수 있도록 설계되었습니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 기술 스택
+- React (Vite 기반 프로젝트 설정)
+- React Hooks (useState, useEffect, useRef 등 활용)
+- Styled-components (CSS-in-JS)
+- LocalStorage (데이터 상태 저장)
+- Framer Motion (애니메이션 효과 적용)
 
-## Expanding the ESLint configuration
+## 🚀 주요 기능
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### ✅ 기본 기능
+1. **프로젝트 제목 수정**
+   - 프로젝트 제목을 사용자가 직접 수정할 수 있도록 구현
+2. **컬럼 추가 및 삭제**
+   - 기본 컬럼(시작 전, 진행 중, 완료) 외에 새로운 컬럼 추가 및 삭제 가능 (단, 기본 컬럼 삭제 불가)
+3. **카드 추가 및 수정, 삭제**
+   - 사용자가 컬럼 내에서 새로운 카드를 추가하고, 수정 및 삭제할 수 있음
+4. **카드 이동**
+   - **드래그 앤 드롭**을 활용하여 컬럼 간 이동 및 같은 컬럼 내에서 순서 변경 가능 (라이브러리 없이 직접 구현)
+5. **상태 저장**
+   - **로컬 스토리지**를 사용하여 보드 상태 유지
+6. **반응형 디자인 지원**
+   - 모바일 및 태블릿 환경에서도 자연스럽게 동작하도록 반응형 레이아웃 적용
 
-- Configure the top-level `parserOptions` property like this:
+### 🔥 추가 기능 (선택사항 구현 부분)
+- **태그 관리**
+  - 각 카드에 태그를 추가 및 삭제할 수 있도록 구현
+  - 사용자가 태그 생성 시 색상을 지정할 수 있도록 기능 추가
+- **애니메이션 효과**
+  - **드래그 시 부드러운 이동 효과** 적용 (Framer Motion 활용)
+  - **카드 추가/삭제 시 애니메이션 효과** 적용하여 UX 개선
+- **배포**
+  - 프로젝트를 배포하여 실제 사용 가능한 상태로 제공 (배포 링크: [배포 URL 입력])
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📂 폴더 구조
+```
+📦 프로젝트 루트
+ ┣ 📂 src
+ ┃ ┣ 📂 components  # UI 컴포넌트
+ ┃ ┣ 📂 hooks        # 커스텀 훅
+ ┃ ┣ 📂 utils        # 유틸리티 함수
+ ┃ ┣ 📂 styles       # 전역 스타일
+ ┃ ┣ 📝 App.js       # 메인 애플리케이션
+ ┃ ┣ 📝 index.js     # React 진입점
+ ┣ 📝 package.json
+ ┣ 📝 README.md
+ ┗ 📝 .gitignore
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🏗 프로젝트 실행 방법
+1. **프로젝트 클론**
+   ```sh
+   git clone [레포지토리 URL]
+   cd [프로젝트 폴더명]
+   ```
+2. **패키지 설치**
+   ```sh
+   npm install
+   ```
+3. **개발 서버 실행**
+   ```sh
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 📝 회고 및 개선점
+- **드래그 앤 드롭을 직접 구현**하며, 브라우저의 기본 이벤트 제어에 대한 이해도를 높일 수 있었음
+- **반응형 UI**를 고려하여 모바일 및 태블릿에서도 사용 가능하도록 개선
+- **로컬 스토리지 활용**을 통해 새로고침해도 데이터가 유지되도록 구현
+- 향후 **DND 라이브러리 적용 여부**를 비교하여 유지보수 용이성을 높일 계획
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 📌 라이선스
+이 프로젝트는 MIT 라이선스를 따릅니다.
+

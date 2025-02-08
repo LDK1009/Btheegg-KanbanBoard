@@ -1,5 +1,4 @@
 import { MenuItem, Select } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { flex } from "../../styles/mixins";
 
@@ -7,7 +6,7 @@ type PropsType = {
   label?: string;
   selectValue: MenuType;
   menus: MenuType[];
-  menuClick: Dispatch<SetStateAction<string>>;
+  menuClick: (value: string) => void;
 };
 
 type MenuType = string;
