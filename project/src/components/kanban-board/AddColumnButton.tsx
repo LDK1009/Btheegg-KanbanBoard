@@ -53,6 +53,7 @@ const Container = styled.div`
 const ButtonContainer = styled.div`
   width: 100%;
   ${mixinCommonButton({ round: false })};
+  cursor:pointer;
 `;
 
 const AddIcon = styled(AddOutlinedIcon)`
