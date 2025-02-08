@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { bodyText, flex } from "../../styles/mixins";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 
 const Profile = () => {
   return (
@@ -7,7 +8,7 @@ const Profile = () => {
       <Img src="/avatar.png" alt="프로필 이미지" />
       <NameBox>
         <Name>이동규</Name>
-        <DropIcon src="/arrow-down-contained-01.png" />
+        <DropIcon />
       </NameBox>
     </Container>
   );
@@ -35,7 +36,7 @@ const Name = styled.div`
   color: #3a3a3a;
 `;
 
-const DropIcon = styled.img`
+const DropIcon = styled(KeyboardArrowDownOutlinedIcon)`
   width: 24px;
   height: 24px;
 `;
