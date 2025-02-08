@@ -2,19 +2,35 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { bodyText, flex, mixinCommonButton } from "../../styles/mixins";
 import { CardType, ColumnType } from "../../types/ui/kanban-board.type";
 import styled from "styled-components";
-import { useAddCardModalStore } from "../../store";
+import { useAddCardModalStore, useKanbanBoardStore } from "../../store";
+import { useRef } from "react";
 
 type PropsType = {
-  columnName:ColumnType;
-  cards:CardType[];
-}
-
+  columnName: ColumnType;
+  cards: CardType[];
+};
 
 const CardColumnHeader = ({ columnName, cards }: PropsType) => {
+  // store
   const { open } = useAddCardModalStore();
+  const { deleteColumn } = useKanbanBoardStore();
+
+  // hooks
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // useEffect
+  const handleRightClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // 기본 우클릭 메뉴 방지
+    if (headerRef.current && headerRef.current.contains(e.target as Node)) {
+      const isYes = confirm("선택한 컬럼을 삭제하시겠습니까?");
+      if (isYes) {
+        deleteColumn(columnName);
+      }
+    }
+  };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer ref={headerRef} onContextMenu={handleRightClick}>
       <NameBadgeWrap>
         <Name>{columnName}</Name>
         <Bedge>{cards.length}</Bedge>

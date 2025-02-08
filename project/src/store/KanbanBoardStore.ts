@@ -8,9 +8,11 @@ type KanbanBoardStoreType = {
   deleteCard: (id: number) => void;
   columns: ColumnType[];
   addColumn: (columnName: string) => void;
+  deleteColumn: (columnName: string) => void;
 };
 
 export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
+  ////////// 카드 관련
   cards: [
     {
       id: 1,
@@ -34,19 +36,45 @@ export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
       ContentText: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
   ],
+
   // 카드 생성
   addCard: (cardInfo) =>
     set((state) => ({
       cards: [...state.cards, cardInfo], // 새로운 카드 추가
     })),
+
   // 카드 삭제
   deleteCard: (id) =>
     set((state) => ({
       cards: state.cards.filter((card) => card.id !== id),
     })),
+
+  ////////// 컬럼 관련
   columns: ["시작 전", "진행 중", "완료"],
+
   // 컬럼 생성
-  addColumn: (columnName) => set((state) => ({
-    columns : [...state.columns, columnName]
-  })),
+  addColumn: (columnName) => {
+    set((state) => {
+      if (state?.columns.includes(columnName)) {
+        alert("중복된 이름의 컬럼은 생성할 수 없습니다.");
+        return state;
+      }
+
+      return {
+        columns: [...state.columns, columnName],
+      };
+    });
+  },
+
+  // 컬럼 삭제
+  deleteColumn: (columnName) => {
+    if (["시작 전", "진행 중", "완료"].includes(columnName)) {
+      alert(`"${columnName}" 컬럼은 삭제할 수 없습니다.`);
+      return;
+    }
+
+    set((state) => ({
+      columns: state.columns.filter((col) => col !== columnName),
+    }));
+  },
 }));

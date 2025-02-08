@@ -16,7 +16,7 @@ const CardColumn = ({ columnName }: PropsType) => {
   const { isDrag } = useCardDragStore();
   const { cards, addCard, deleteCard } = useKanbanBoardStore();
 
-  // DnD hooks
+  // hooks
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
     drop: (card: CardType) => {
