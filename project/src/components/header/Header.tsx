@@ -5,7 +5,7 @@ import Profile from "./Profile";
 const Header = () => {
   return (
     <Container>
-      <img src="/public/btheegg-logo.png" alt="비더에그 로고" />
+      <img src="/btheegg-logo.png" alt="비더에그 로고" />
       <Profile />
     </Container>
   );

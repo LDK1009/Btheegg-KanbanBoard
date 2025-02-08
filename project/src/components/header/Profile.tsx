@@ -4,10 +4,10 @@ import { bodyText, flex } from "../../styles/mixins";
 const Profile = () => {
   return (
     <Container>
-      <Img src="/public/avatar.png" alt="프로필 이미지" />
+      <Img src="/avatar.png" alt="프로필 이미지" />
       <NameBox>
         <Name>이동규</Name>
-        <DropIcon src="/public/arrow-down-contained-01.png" />
+        <DropIcon src="/arrow-down-contained-01.png" />
       </NameBox>
     </Container>
   );
