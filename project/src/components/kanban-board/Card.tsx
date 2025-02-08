@@ -34,6 +34,16 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
     console.log(isDragging);
   }, [isDragging, setIsDrag]);
 
+  // ESC 키 입력 시 메뉴 닫기
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuVisable(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <Container ref={drag}>
       <Header>
