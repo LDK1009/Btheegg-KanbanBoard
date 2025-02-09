@@ -1,46 +1,33 @@
 import styled, { keyframes } from "styled-components";
 import { useAddCardModalStore, useKanbanBoardStore } from "../../store";
 import { Modal } from "@mui/material";
-import CommonInput from "../common/CommonInput";
-import { useState } from "react";
-import { bodyText, flex } from "../../styles/mixins";
+import { bodyText, flex, mixinCommonInput, mixinInputLabel, mixinInputWrapper } from "../../styles/mixins";
 import Card from "./Card";
 import CommonSelect from "../common/CommonSelect";
 
 const AddCardModal = () => {
   ////////// Store
+  const { type, inputValue, setInputValue, clearInputValue } = useAddCardModalStore();
   const { isOpen, close, selectedColumn, setSelectedColumn } = useAddCardModalStore();
   const { cards, columns, addCard } = useKanbanBoardStore();
 
   ////////// State
-  const [formData, setFormData] = useState({
-    TagText: "",
-    TagTextColor: "",
-    ContentText: "",
-  });
 
   ////////// Function
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const changeColor = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      TagTextColor: value,
-    }));
-  };
-
-  const clearFormData = () => {
-    setFormData({
-      TagText: "",
-      TagTextColor: "",
-      ContentText: "",
-    });
+  const handleSubmit = (e: React.FormEvent) => {
+    if (type === "add") {
+      e.preventDefault();
+      close();
+      addCard({ id: nextCardId, columnName: selectedColumn, ...inputValue });
+      clearInputValue();
+    }
+    if (type === "edit") {
+      e.preventDefault();
+      alert("수정완료~!");
+      // close();
+      // addCard({ id: nextCardId, columnName: selectedColumn, ...inputValue });
+      clearInputValue();
+    }
   };
 
   ////////// Data
@@ -50,16 +37,16 @@ const AddCardModal = () => {
       label: "태그명",
       placeholder: "문서화",
       type: "text",
-      value: formData.TagText,
-      onChange: handleChange,
+      value: inputValue.TagText,
+      onChange: setInputValue,
     },
     {
       name: "ContentText",
       label: "설명",
       placeholder: "디자인시스템 2.1버전 로그를 작성합니다.",
       type: "text",
-      value: formData.ContentText,
-      onChange: handleChange,
+      value: inputValue.ContentText,
+      onChange: setInputValue,
     },
   ];
 
@@ -76,33 +63,31 @@ const AddCardModal = () => {
 
   ////////// Rendering
   const RenderInputs = inputs.map((el, idx) => {
-    const { label, placeholder, type, value, onChange } = el;
+    const { name, label, placeholder, type, value, onChange } = el;
     return (
-      <>
-        <CommonInput
+      <InputWrapper>
+        <InputLabel>{label}</InputLabel>
+        <Input
           key={idx}
           name={el.name}
-          label={label}
-          placeholder={placeholder}
           type={type}
+          placeholder={placeholder}
           value={value}
-          onChange={onChange}
-          required={true}
+          onChange={(e) => onChange(name, e.target.value)}
+          required
         />
-      </>
+      </InputWrapper>
     );
   });
 
   const RenderColors = colors.map((el, idx) => (
-    <ColorSelecter key={idx} $backgroundColor={el} $delay={(idx + 1) * 0.3} onClick={() => changeColor(el)} />
+    <ColorSelecter
+      key={idx}
+      $backgroundColor={el}
+      $delay={(idx + 1) * 0.3}
+      onClick={() => setInputValue("TagTextColor", el)}
+    />
   ));
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    close();
-    addCard({ id: nextCardId, columnName: selectedColumn, ...formData });
-    clearFormData();
-  };
 
   ////////// Return
   return (
@@ -117,9 +102,9 @@ const AddCardModal = () => {
               <Card
                 id={nextCardId}
                 columnName={selectedColumn}
-                TagText={formData.TagText}
-                TagTextColor={formData.TagTextColor}
-                ContentText={formData.ContentText}
+                TagText={inputValue.TagText}
+                TagTextColor={inputValue.TagTextColor}
+                ContentText={inputValue.ContentText}
               />
             </CardPreview>
           </PreviewContainer>
@@ -264,4 +249,16 @@ const SubmitButton = styled.button`
     color: rgba(0, 0, 255, 0.2);
     transform: scale(0.98);
   }
+`;
+
+const InputWrapper = styled.div`
+  ${mixinInputWrapper()};
+`;
+
+const InputLabel = styled.label`
+  ${mixinInputLabel()};
+`;
+
+const Input = styled.input`
+  ${mixinCommonInput()};
 `;

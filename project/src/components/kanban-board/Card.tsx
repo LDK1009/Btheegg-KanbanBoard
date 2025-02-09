@@ -4,11 +4,12 @@ import Tag from "./Tag";
 import { CardType } from "../../types/ui/kanban-board.type";
 import { useDrag } from "react-dnd";
 import { useEffect, useState } from "react";
-import { useCardDragStore, useKanbanBoardStore } from "../../store";
+import { useAddCardModalStore, useCardDragStore, useKanbanBoardStore } from "../../store";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
 const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
+  const { open, clearInputValue } = useAddCardModalStore();
   const { setIsDrag } = useCardDragStore();
   const { deleteCard } = useKanbanBoardStore();
   // state
@@ -27,6 +28,13 @@ const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }:
       }
     },
   }));
+
+  // Fuction
+  const handleEdit = () => {
+    open("edit");
+
+    clearInputValue();
+  };
 
   // useEffect
   useEffect(() => {
@@ -55,7 +63,7 @@ const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }:
           {menuVisable && (
             <>
               <MenuBox>
-                <MenuItem onClick={() => {}}>수정</MenuItem>
+                <MenuItem onClick={handleEdit}>수정</MenuItem>
                 <MenuItem onClick={() => deleteCard(id)}>삭제</MenuItem>
               </MenuBox>
             </>

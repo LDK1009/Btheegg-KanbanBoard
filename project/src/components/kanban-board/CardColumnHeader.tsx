@@ -37,7 +37,7 @@ const CardColumnHeader = ({ columnName, cards }: PropsType) => {
       </NameBadgeWrap>
       <AddButton
         onClick={() => {
-          open();
+          open("add");
           setSelectedColumn(columnName);
         }}
       >

@@ -13,7 +13,7 @@ const AddCardButton = ({ columnName }: PropsType) => {
   return (
     <Container
       onClick={() => {
-        addCardModalOpen();
+        addCardModalOpen("add");
         setSelectedColumn(columnName);
       }}
     >
