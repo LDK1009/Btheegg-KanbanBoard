@@ -92,6 +92,6 @@ const CardColumnContainer = styled.div`
   justify-content: start;
   align-items: start;
   row-gap: 48px;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   column-gap: 20px;
 `;
