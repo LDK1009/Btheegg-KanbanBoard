@@ -6,6 +6,8 @@ type KanbanBoardStoreType = {
   cards: CardType[];
   addCard: (cardInfo: CardType) => void;
   deleteCard: (id: number) => void;
+  editCard: (id: number, updatedData: CardType) => void;
+
   columns: ColumnType[];
   addColumn: (columnName: string) => void;
   deleteColumn: (columnName: string) => void;
@@ -36,17 +38,20 @@ export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
       ContentText: "디자인시스템 2.1 버전로그를 작성합니다.",
     },
   ],
-
   // 카드 생성
   addCard: (cardInfo) =>
     set((state) => ({
       cards: [...state.cards, cardInfo], // 새로운 카드 추가
     })),
-
   // 카드 삭제
   deleteCard: (id) =>
     set((state) => ({
       cards: state.cards.filter((card) => card.id !== id),
+    })),
+  // 카드 수정
+  editCard: (id, updatedData) =>
+    set((state) => ({
+      cards: state.cards.map((card) => (card.id === id ? { ...updatedData } : card)),
     })),
 
   ////////// 컬럼 관련

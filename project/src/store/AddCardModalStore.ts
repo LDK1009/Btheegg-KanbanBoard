@@ -4,6 +4,9 @@ import { create } from "zustand";
 type AddCardModalStoreType = {
   type: modalType;
 
+  editCardId: number;
+  setEditCardId: (id: number) => void;
+
   inputValue: {
     TagText: string;
     TagTextColor: string;
@@ -24,6 +27,12 @@ type modalType = "add" | "edit";
 
 export const useAddCardModalStore = create<AddCardModalStoreType>((set) => ({
   type: "add",
+
+  editCardId: 0,
+  setEditCardId: (id) =>
+    set(() => {
+      return { editCardId: id };
+    }),
 
   inputValue: {
     TagText: "",

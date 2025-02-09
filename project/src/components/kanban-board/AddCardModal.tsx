@@ -7,9 +7,18 @@ import CommonSelect from "../common/CommonSelect";
 
 const AddCardModal = () => {
   ////////// Store
-  const { type, inputValue, setInputValue, clearInputValue } = useAddCardModalStore();
-  const { isOpen, close, selectedColumn, setSelectedColumn } = useAddCardModalStore();
-  const { cards, columns, addCard } = useKanbanBoardStore();
+  const {
+    editCardId,
+    type,
+    inputValue,
+    setInputValue,
+    clearInputValue,
+    isOpen,
+    close,
+    selectedColumn,
+    setSelectedColumn,
+  } = useAddCardModalStore();
+  const { cards, columns, addCard, editCard } = useKanbanBoardStore();
 
   ////////// State
 
@@ -23,10 +32,9 @@ const AddCardModal = () => {
     }
     if (type === "edit") {
       e.preventDefault();
-      alert("수정완료~!");
-      // close();
-      // addCard({ id: nextCardId, columnName: selectedColumn, ...inputValue });
+      editCard(editCardId, { id: editCardId, columnName: selectedColumn, ...inputValue });
       clearInputValue();
+      close();
     }
   };
 
@@ -121,7 +129,7 @@ const AddCardModal = () => {
           </InputContainer>
         </InputPreviewWrap>
         {/* 제출 버튼 */}
-        <SubmitButton type="submit">생성</SubmitButton>
+        <SubmitButton type="submit">{type === "add" ? "생성" : "수정"}</SubmitButton>
       </FormContainer>
     </Modal>
   );

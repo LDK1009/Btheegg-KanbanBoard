@@ -9,7 +9,7 @@ import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
 const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
-  const { open, clearInputValue } = useAddCardModalStore();
+  const { open, setInputValue, setEditCardId, setSelectedColumn } = useAddCardModalStore();
   const { setIsDrag } = useCardDragStore();
   const { deleteCard } = useKanbanBoardStore();
   // state
@@ -31,9 +31,34 @@ const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }:
 
   // Fuction
   const handleEdit = () => {
+    setMenuVisable(false);
     open("edit");
+    setEditCardId(id);
+    setSelectedColumn(columnName);
 
-    clearInputValue();
+    const init = [
+      {
+        name: "TagText",
+        value: TagText,
+      },
+      {
+        name: "TagTextColor",
+        value: TagTextColor,
+      },
+      {
+        name: "ContentText",
+        value: ContentText,
+      },
+    ];
+
+    init.map((el) => {
+      setInputValue(el.name, el.value || "");
+    });
+  };
+
+  const handleDelete = () => {
+    setMenuVisable(false);
+    deleteCard(id);
   };
 
   // useEffect
@@ -64,7 +89,7 @@ const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }:
             <>
               <MenuBox>
                 <MenuItem onClick={handleEdit}>수정</MenuItem>
-                <MenuItem onClick={() => deleteCard(id)}>삭제</MenuItem>
+                <MenuItem onClick={handleDelete}>삭제</MenuItem>
               </MenuBox>
             </>
           )}
