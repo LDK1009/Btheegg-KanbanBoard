@@ -67,7 +67,7 @@ const AddCardModal = () => {
     menuClick: setSelectedColumn,
   };
 
-  const nextCardId = (cards[cards.length - 1]?.id + 1) | 1;
+  const nextCardId = (Math.max(...cards.map(card => card.id)))+1 || 1;
 
   ////////// Rendering
   const RenderInputs = inputs.map((el, idx) => {
