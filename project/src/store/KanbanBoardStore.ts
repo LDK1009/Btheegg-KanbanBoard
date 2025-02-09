@@ -60,6 +60,11 @@ export const useKanbanBoardStore = create<KanbanBoardStoreType>((set) => ({
   // 컬럼 생성
   addColumn: (columnName) => {
     set((state) => {
+      if (columnName.trim() === "") {
+        alert("컬럼명을 입력해주세요");
+        return state;
+      }
+
       if (state?.columns.includes(columnName)) {
         alert("중복된 이름의 컬럼은 생성할 수 없습니다.");
         return state;
