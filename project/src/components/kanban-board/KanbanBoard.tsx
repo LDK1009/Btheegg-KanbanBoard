@@ -4,7 +4,7 @@ import { flex } from "../../styles/mixins";
 import AddCardModal from "./AddCardModal";
 import { useKanbanBoardStore } from "../../store";
 import AddColumnButton from "./AddColumnButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const KanbanBoard = () => {
   // Store
@@ -32,6 +32,13 @@ const KanbanBoard = () => {
     return <CardColumn key={idx} columnName={el} />;
   });
 
+
+  /////임시
+  const {cards} = useKanbanBoardStore();
+  useEffect(() => {
+    console.log(cards);
+  }, [cards]);
+  
   return (
     <Container>
       {/* 카드 추가 모달 */}

@@ -18,7 +18,7 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
   // hooks
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "BOX",
-    item: { id, columnName, TagText, TagTextColor, ContentText },
+    item: {...{ id, columnName, TagText, TagTextColor, ContentText }},
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -28,6 +28,14 @@ const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) 
       }
     },
   }));
+
+
+    // 임시
+    useEffect(() => {
+      if (isDragging) {
+        console.log("드래그 시작:", { id, columnName, TagText, TagTextColor, ContentText });
+      }
+    }, [isDragging]); // isDragging이 변경될 때 실행
 
   // Fuction
   const handleEdit = () => {

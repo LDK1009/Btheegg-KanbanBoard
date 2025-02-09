@@ -6,6 +6,7 @@ import { useDrop } from "react-dnd";
 import { useCardDragStore, useKanbanBoardStore } from "../../store";
 import CardColumnHeader from "./CardColumnHeader";
 import { CardType } from "../../types/ui/kanban-board.type";
+import { useEffect } from "react";
 
 type PropsType = {
   columnName: string;
@@ -14,17 +15,19 @@ type PropsType = {
 const CardColumn = ({ columnName }: PropsType) => {
   // store
   const { isDrag } = useCardDragStore();
-  const { cards, addCard, deleteCard } = useKanbanBoardStore();
+  const { cards } = useKanbanBoardStore();
 
   // hooks
+  useEffect(() => {}, []);
+
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
-    drop: (card: CardType) => {
-      deleteCard(card.id);
-      addCard({
-        ...card,
-        columnName,
-      });
+    drop: async (card?: CardType) => {
+      if (!card) return;
+
+      // 최신 카드 데이터
+      const latestCard = useKanbanBoardStore.getState().cards.find((c) => c.id === card.id) || card;
+      await useKanbanBoardStore.getState().editCard(card.id, { ...latestCard, columnName });
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
