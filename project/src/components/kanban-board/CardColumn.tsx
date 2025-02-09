@@ -6,7 +6,6 @@ import { useDrop } from "react-dnd";
 import { useCardDragStore, useKanbanBoardStore } from "../../store";
 import CardColumnHeader from "./CardColumnHeader";
 import { CardType } from "../../types/ui/kanban-board.type";
-import { useEffect } from "react";
 
 type PropsType = {
   columnName: string;
@@ -18,8 +17,6 @@ const CardColumn = ({ columnName }: PropsType) => {
   const { cards } = useKanbanBoardStore();
 
   // hooks
-  useEffect(() => {}, []);
-
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "BOX",
     drop: async (card?: CardType) => {
