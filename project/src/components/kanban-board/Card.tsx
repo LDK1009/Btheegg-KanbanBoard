@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useAddCardModalStore, useCardDragStore, useKanbanBoardStore } from "../../store";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
+const Card = ({ id, columnName, TagText, TagTextColor, ContentText }: CardType) => {
   // store
   const { open, setInputValue, setEditCardId, setSelectedColumn } = useAddCardModalStore();
   const { setIsDrag } = useCardDragStore();
@@ -78,7 +78,7 @@ const Card = ({ delay = 0, id, columnName, TagText, TagTextColor, ContentText }:
   }, []);
 
   return (
-    <Container ref={drag} $delay={delay}>
+    <Container ref={drag}>
       <Header>
         {/* 태그 */}
         <Tag color={TagTextColor}>{TagText}</Tag>
@@ -114,7 +114,7 @@ const slideUp = keyframes`
   }
 `;
 
-const Container = styled.div<{ $delay: number }>`
+const Container = styled.div`
   width: 201px;
   height: 112px;
   ${flex("column")};
@@ -127,7 +127,6 @@ const Container = styled.div<{ $delay: number }>`
   cursor: grab;
   transition: box-shadow 0.3s ease-in-out;
   animation: ${slideUp} 0.3s ease-in-out both;
-  animation-delay: ${({ $delay }) => `${$delay}s`};
 
   &:hover {
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 255, 0.2);
